@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bull Company | Login</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+        
+        :root {
+            --primary-color: #ff6b35;
+            --secondary-color: #292e36;
+            --accent-color: #f7c59f;
+            --light-color: #f4f4f9;
+            --dark-color: #1a1a1a;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 107, 53, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 107, 53, 0.1) 0%, transparent 20%);
+        }
+        
+        .container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, var(--primary-color), transparent);
+            transform: rotate(45deg);
+            opacity: 0.1;
+            pointer-events: none;
+        }
+        
+        .form-container {
+            padding: 40px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .bull-logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .bull-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin-bottom: 15px;
+        }
+        
+        .bull-icon::before {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            top: -10px;
+            left: 15px;
+        }
+        
+        .bull-icon::after {
+            content: '';
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: var(--dark-color);
+            border-radius: 50%;
+            top: 20px;
+            left: 25px;
+            box-shadow: 25px 0 0 var(--dark-color);
+        }
+        
+        .bull-horns {
+            position: absolute;
+            width: 60px;
+            height: 20px;
+            border: 5px solid var(--dark-color);
+            border-color: var(--dark-color) transparent transparent transparent;
+            border-radius: 50%/10px 10px 0 0;
+            top: -5px;
+        }
+        
+        .bull-horns.left {
+            left: 5px;
+            transform: rotate(-30deg);
+        }
+        
+        .bull-horns.right {
+            right: 5px;
+            transform: rotate(30deg);
+        }
+        
+        h2 {
+            color: var(--secondary-color);
+            font-weight: 600;
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+        
+        .subtitle {
+            color: #777;
+            font-weight: 300;
+            font-size: 14px;
+            margin-bottom: 30px;
+            display: block;
+        }
+        
+        .form-group {
+            position: relative;
+            margin-bottom: 25px;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background-color: #f9f9f9;
+        }
+        
+        .form-group input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.2);
+            outline: none;
+            background-color: white;
+        }
+        
+        .form-group label {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            color: #999;
+            font-weight: 300;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+        
+        .form-group input:focus + label,
+        .form-group input:valid + label {
+            top: -10px;
+            left: 15px;
+            font-size: 12px;
+            background: white;
+            padding: 0 5px;
+            color: var(--primary-color);
+        }
+        
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+        
+        .remember-me {
+            display: flex;
+            align-items: center;
+        }
+        
+        .remember-me input {
+            margin-right: 8px;
+            accent-color: var(--primary-color);
+        }
+        
+        .forgot-password a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: var(--primary-color);
+            color: white;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+        
+        .btn:hover {
+            background: #e05a2b;
+            transform: translateY(-2px);
+        }
+        
+        .signup-link {
+            text-align: center;
+            font-size: 14px;
+            color: #777;
+        }
+        
+        .signup-link a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 25px 0;
+        }
+        
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #ddd;
+        }
+        
+        .divider span {
+            padding: 0 15px;
+            color: #777;
+            font-size: 14px;
+        }
+        
+        .social-login {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .social-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .social-btn:hover {
+            background: #f5f5f5;
+            transform: translateY(-2px);
+        }
+        
+        .social-btn i {
+            font-size: 18px;
+            color: #555;
+        }
+        
+        /* Bull shape decorative elements */
+        .bull-shape {
+            position: absolute;
+            opacity: 0.1;
+            z-index: 0;
+        }
+        
+        .bull-shape-1 {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            top: -30px;
+            right: -30px;
+        }
+        
+        .bull-shape-2 {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            bottom: -20px;
+            left: -20px;
+        }
+        
+        /* Toggle between login and signup */
+        .signup-form {
+            display: none;
+        }
+        
+        /* Responsive */
+        @media (max-width: 480px) {
+            .container {
+                border-radius: 0;
+            }
+            
+            .form-container {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="bull-shape bull-shape-1"></div>
+        <div class="bull-shape bull-shape-2"></div>
+        
+        <div class="form-container">
+            <div class="bull-logo">
+                <div class="bull-icon">
+                    <div class="bull-horns left"></div>
+                    <div class="bull-horns right"></div>
+                </div>
+                <h2>Bull Company</h2>
+                <span class="subtitle">Charge ahead with power</span>
+            </div>
+            
+            <form class="login-form">
+                <div class="form-group">
+                    <input type="text" id="login-email" required>
+                    <label for="login-email">Email</label>
+                </div>
+                
+                <div class="form-group">
+                    <input type="password" id="login-password" required>
+                    <label for="login-password">Password</label>
+                </div>
+                
+                <div class="remember-forgot">
+                    <div class="remember-me">
+                        <input type="checkbox" id="remember">
+                        <label for="remember">Remember me</label>
+                    </div>
+                    <div class="forgot-password">
+                        <a href="#">Forgot password?</a>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn">Login</button>
+                
+                <div class="divider"><span>or</span></div>
+                
+                <div class="social-login">
+                    <div class="social-btn">
+                        <i class="fab fa-google"></i>
+                    </div>
+                    <div class="social-btn">
+                        <i class="fab fa-facebook-f"></i>
+                    </div>
+                    <div class="social-btn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </div>
+                </div>
+                
+                <div class="signup-link">
+                    Don't have an account? <a href="#" id="show-signup">Sign up</a>
+                </div>
+            </form>
+            
+            <form class="signup-form">
+                <div class="form-group">
+                    <input type="text" id="signup-name" required>
+                    <label for="signup-name">Full Name</label>
+                </div>
+                
+                <div class="form-group">
+                    <input type="email" id="signup-email" required>
+                    <label for="signup-email">Email</label>
+                </div>
+                
+                <div class="form-group">
+                    <input type="password" id="signup-password" required>
+                    <label for="signup-password">Password</label>
+                </div>
+                
+                <div class="form-group">
+                    <input type="password" id="signup-confirm" required>
+                    <label for="signup-confirm">Confirm Password</label>
+                </div>
+                
+                <button type="submit" class="btn">Sign Up</button>
+                
+                <div class="signup-link">
+                    Already have an account? <a href="#" id="show-login">Login</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.querySelector('.login-form');
+            const signupForm = document.querySelector('.signup-form');
+            const showSignup = document.getElementById('show-signup');
+            const showLogin = document.getElementById('show-login');
+            
+            // Toggle between login and signup forms
+            showSignup.addEventListener('click', function(e) {
+                e.preventDefault();
+                loginForm.style.display = 'none';
+                signupForm.style.display = 'block';
+            });
+            
+            showLogin.addEventListener('click', function(e) {
+                e.preventDefault();
+                signupForm.style.display = 'none';
+                loginForm.style.display = 'block';
+            });
+            
+            // Form submission
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = document.getElementById('login-email').value;
+                const password = document.getElementById('login-password').value;
+                
+                // Here you would typically send this data to your server
+                console.log('Login attempt with:', { email, password });
+                
+                // Show a simple alert for demo purposes
+                alert('Login functionality would be implemented here. Submitted: ' + email);
+            });
+            
+            signupForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const name = document.getElementById('signup-name').value;
+                const email = document.getElementById('signup-email').value;
+                const password = document.getElementById('signup-password').value;
+                const confirmPassword = document.getElementById('signup-confirm').value;
+                
+                if (password !== confirmPassword) {
+                    alert('Passwords do not match!');
+                    return;
+                }
+                
+                // Here you would typically send this data to your server
+                console.log('Signup attempt with:', { name, email, password });
+                
+                // Show a simple alert for demo purposes
+                alert('Signup functionality would be implemented here. Submitted: ' + email);
+                
+                // Switch back to login form after signup
+                signupForm.style.display = 'none';
+                loginForm.style.display = 'block';
+            });
+            
+            // Add smooth transitions when switching forms
+            [loginForm, signupForm].forEach(form => {
+                form.style.transition = 'opacity 0.3s ease';
+            });
+        });
+    </script>
+</body>
+</html>
